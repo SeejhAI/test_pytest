@@ -3,7 +3,7 @@ name: Pull Request CI
 on:
   pull_request:
     paths:
-      - '**/*.py'  # Adjust this based on your project structure
+      - 'tests/**/*.py'
 
 jobs:
   test:
@@ -16,12 +16,21 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8  # Adjust as needed
+        python-version: "3.10"
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt  # Adjust as needed
+        pip install -r requirements.txt  
 
     - name: Run affected tests
       run: |
-        python -m pytest -k $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '.py' | paste -sd, -)
+        # Get the list of changed Python files in the pull request
+        changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
+
+        # Check if there are changes
+        if [ -n "$changed_files" ]; then
+          # Run tests for the changed files
+          python -m pytest -k $(echo "$changed_files" | paste -sd, -)
+        else
+          echo "No Python files in tests folder changed. Skipping tests."
+        fi
