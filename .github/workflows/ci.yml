@@ -1,0 +1,27 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    paths:
+      - '**/*.py'  # Adjust this based on your project structure
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8  # Adjust as needed
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  # Adjust as needed
+
+    - name: Run affected tests
+      run: |
+        python -m pytest -k $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '.py' | paste -sd, -)
