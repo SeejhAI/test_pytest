@@ -1,40 +1,37 @@
-name: Smoke Test on Pull Request
-
+name: Run specific test
 on:
   pull_request:
     types:
       - opened
       - synchronize
       - reopened
-    paths:
-      - 'tests/**/*.py'
 
 jobs:
-  smoke_test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Get changed Python files
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD~1 | grep '^tests/.*\.py$')
+          echo "Changed Python Test Files: $CHANGED_FILES"
+          echo "::set-env name=CHANGED_FILES::$CHANGED_FILES"
+
+      - name: Install Python dependencies
         uses: actions/setup-python@v2
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt  
+      - name: Install Package dependencies
+        run: pip install -r requirements.txt
 
-      - name: Run smoke tests on affected files
+      - name: Run affected tests
         run: |
-          # Get the list of changed Python files in the pull request
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
-      
-          # Check if there are changes
-          if [ -n "$changed_files" ]; then
-            # Run smoke tests for the changed files
-            python -m pytest -k "smoke" "$(echo "$changed_files" | tr '\n' ' ')"
+          if [ -n "$CHANGED_FILES" ]; then
+            python -m pytest -k "$(echo "$CHANGED_FILES" | tr '\n' ' ')"
           else
-            echo "No Python files in tests folder changed. Skipping smoke tests."
+            echo "No Python test files changed. Skipping tests."
           fi
