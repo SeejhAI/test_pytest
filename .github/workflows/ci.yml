@@ -7,7 +7,7 @@ on:
         - synchronize
         - reopened
       paths:
-      - 'test_/**/*.py'
+      - 'tests/**/*.py'
      
        
 
@@ -31,7 +31,7 @@ jobs:
     - name: Run affected tests
       run: |
           # Get the list of changed Python files in the pull request
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^test_/.*\.py$')
       
           # Check if there are changes
           if [ -n "$changed_files" ]; then
