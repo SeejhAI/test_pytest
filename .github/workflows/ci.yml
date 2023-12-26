@@ -1,40 +1,43 @@
-name: CI
+name: Pull Request CI
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
-    paths:
+      types:
+        - opened
+        - synchronize
+        - reopened
+      paths:
       - 'tests/**/*.py'
+     
+       
 
 jobs:
-  pytest:
-    name: Pytest
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Get changed files
-        run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'tests**/*.py')
-          echo "Changed Python Files: $CHANGED_FILES"
-          echo "::set-env name=CHANGED_FILES::$CHANGED_FILES"
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.10"
 
-      - name: Install Python dependencies
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt  
 
-      - name: Install Package dependencies
-        run: pip install -r requirements.txt
+    - name: Run affected tests
+      run: |
+          # Get the list of changed Python files in the pull request
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
+      
+          # Check if there are changes
+          if [ -n "$changed_files" ]; then
+            # Run tests for the changed files
+            python -m pytest -k "$(echo "$changed_files" | tr '\n' ' ')"
+          else
+            echo "No Python files in tests folder changed. Skipping tests."
+          fi
 
-      - name: Run pytest
-        run: pytest ${{ env.CHANGED_FILES }}
-
-
-
-        
