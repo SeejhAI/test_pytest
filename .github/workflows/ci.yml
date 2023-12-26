@@ -2,8 +2,14 @@ name: Pull Request CI
 
 on:
   pull_request:
-    paths:
+      types:
+        - opened
+        - synchronize
+        - reopened
+      paths:
       - 'tests/**/*.py'
+     
+       
 
 jobs:
   test:
