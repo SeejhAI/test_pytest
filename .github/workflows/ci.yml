@@ -30,9 +30,12 @@ jobs:
 
     - name: Run affected tests
       run: |
-          # Get the list of changed Python files in the pull request
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
+        # Get the list of changed Python files in the pull request
+         changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^tests/.*\.py$')
       
+          # Print changed files for debugging
+          echo "Changed Files: $changed_files"
+         
           # Check if there are changes
           if [ -n "$changed_files" ]; then
             # Run tests for the changed files
@@ -41,3 +44,5 @@ jobs:
             echo "No Python files in tests folder changed. Skipping tests."
           fi
       
+    
+        
