@@ -42,7 +42,7 @@ jobs:
       - name: Run affected tests
         run: |
           if [ -n "$CHANGED_FILES" ]; then
-            pytest -k '$(echo "$CHANGED_FILES" | tr '\n' ' ')'
+            python -m pytest -v -x "$(echo "$CHANGED_FILES" | tr '\n' ' ')"
           else
             echo "No Python test files changed. Skipping tests."
           fi
