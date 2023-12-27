@@ -16,7 +16,7 @@ jobs:
       - name: Github file checking out
         run: |
           echo '${{ toJSON(github) }}' | jq
-          git diff --name-only ${{ github.head_ref }}
+          git diff --${{ github.head_ref }}
           shell: bash
 
 
