@@ -15,7 +15,7 @@ jobs:
       
       - name: Github file checking out
         run: |
-          git checkout ${{ github.event.pull_request.head.sha }}
+          git checkout origin/${{ github.event.pull_request.head.sha }}
           git diff ${{ github.event.pull_request.head.sha }}
       - name: Get changed Python files
         run: | 
