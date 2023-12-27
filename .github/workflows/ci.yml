@@ -15,10 +15,9 @@ jobs:
       
       - name: Github file checking out
         run: |
-          data=$(git ls-remote --heads origin main)
+          git branch -a
           data2=$(git branch -a)
-          echo "${data}"
-          echo "${data1}"
+          echo "${data2}"
           
 
 
