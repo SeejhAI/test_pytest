@@ -20,3 +20,11 @@ def test_divide():
     """
     result = my_function.divide(number_one=10, number_two=5)
     assert result == 2
+
+
+def test_add_string():
+    """
+    Test function to check the 'add' function with string inputs.
+    """
+    result = my_function.add(number_one="I love ", number_two="Sindh")
+    assert result == "I love Sindh"
