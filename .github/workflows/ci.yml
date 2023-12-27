@@ -15,7 +15,9 @@ jobs:
       
       - name: Github file checking out
         run: |
+          echo '${{ toJSON(github) }}' | jq
           git diff ${{ github.event.pull_request.head.sha }}
+          shell: bash
 
 
       - name: Get changed Python files
