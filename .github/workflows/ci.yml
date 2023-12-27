@@ -11,12 +11,13 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: Github file checking out
         run: |
-          git checkout ishaque
           git diff ${{ github.event.pull_request.head.sha }}
+
+
       - name: Get changed Python files
         run: | 
           git checkout ${{ github.event.pull_request.head.sha }}
