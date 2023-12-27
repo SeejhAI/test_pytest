@@ -16,7 +16,8 @@ jobs:
       - name: Github file checking out
         run: |
           echo '${{ toJSON(github) }}' | jq
-          git diff ---${{ github.head_ref }}
+          data=$(git ls-remote --heads origin main)
+          echo "${data}"
           shell: bash
 
 
