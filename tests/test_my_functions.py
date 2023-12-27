@@ -28,3 +28,11 @@ def test_add_string():
     """
     result = my_function.add(number_one="I love ", number_two="Sindh")
     assert result == "I love Sindh"
+
+
+def test_for_add():
+    """
+    Test function to check the 'add' function with integer inputs.
+    """
+    result = my_function.add(number_one=2, number_two=4)
+    assert result == 6
