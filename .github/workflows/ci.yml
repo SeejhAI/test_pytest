@@ -16,7 +16,9 @@ jobs:
       - name: Github file checking out
         run: |
           data=$(git ls-remote --heads origin main)
+          data1=$(git log --graph --simplify-by-decoration --pretty=format:'%d' --all)
           echo "${data}"
+          echo "${data1}"
           
 
 
