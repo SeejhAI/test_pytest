@@ -19,6 +19,8 @@ jobs:
           CHANGED_FILES=$(git diff --name-only $(git merge-base $BASE_BRANCH HEAD) | grep '^tests/.*\.py$' || true)
           echo "Changed Python Test Files: $CHANGED_FILES"
           echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+          echo "base branch: $BASE_BRANCH"
+          
 
       - name: Install Python dependencies
         uses: actions/setup-python@v2
