@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get changed Python files
-        run: |
-          BASE_BRANCH=$(git rev-parse origin/$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@))
+        run: | 
+          BASE_BRANCH=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
           CHANGED_FILES=$(git diff --name-only $BASE_BRANCH HEAD | grep '^tests/.*\.py$' || true)
           echo "Changed Python Test Files: $CHANGED_FILES"
           echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
