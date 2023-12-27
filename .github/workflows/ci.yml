@@ -16,8 +16,11 @@ jobs:
       - name: Github file checking out
         run: |
           git branch -a
+          git rev-parse --abbrev-ref HEAD
+          data1=$(git rev-parse --abbrev-ref HEAD)
           data2=$(git branch -a)
           echo "${data2}"
+          echo "${data1}"
           
 
 
