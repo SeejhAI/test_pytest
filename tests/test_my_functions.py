@@ -36,3 +36,11 @@ def test_for_add():
     """
     result = my_function.add(number_one=2, number_two=4)
     assert result == 6
+
+
+def test_for_divide():
+    """
+    Test function to check the 'divide' function with normal division.
+    """
+    result = my_function.divide(number_one=10, number_two=5)
+    assert result == 2
