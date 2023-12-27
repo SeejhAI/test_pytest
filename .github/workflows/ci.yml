@@ -15,7 +15,6 @@ jobs:
       
       - name: Github file checking out
         run: |
-          echo '${{ toJSON(github) }}' | jq
           data=$(git ls-remote --heads origin main)
           echo "${data}"
           shell: bash
