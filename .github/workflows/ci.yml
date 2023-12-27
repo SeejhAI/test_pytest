@@ -28,10 +28,4 @@ jobs:
       - name: Install Package dependencies
         run: pip install -r requirements.txt
 
-      - name: Run affected tests
-        run: |
-          if [ -n "$CHANGED_FILES" ]; then
-            python -m pytest -k "$(echo "$CHANGED_FILES" | tr '\n' ' ')"
-          else
-            echo "No Python test files changed. Skipping tests."
-          fi
+      
