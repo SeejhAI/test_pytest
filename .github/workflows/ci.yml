@@ -17,7 +17,7 @@ jobs:
         run: |
           data=$(git ls-remote --heads origin main)
           echo "${data}"
-          shell: bash
+          
 
 
       - name: Get changed Python files
