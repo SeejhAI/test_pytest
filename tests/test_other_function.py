@@ -9,9 +9,9 @@ def test_add():
     assert result == 5
 
 
-def test_divide():
+def test_divide_two():
     """
     Test function to check the 'divide' function with normal division.
     """
-    result = my_function.divide(number_one=10, number_two=5)
-    assert result == 2
+    result = my_function.divide(number_one=20, number_two=5)
+    assert result == 4
