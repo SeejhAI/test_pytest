@@ -52,3 +52,11 @@ def test_for_divide1():
     """
     result = my_function.divide(number_one=15, number_two=5)
     assert result == 3
+
+
+def test_for_divide2():
+    """
+    Test function to check the 'divide' function with normal division.
+    """
+    result = my_function.divide(number_one=30, number_two=5)
+    assert result == 6
